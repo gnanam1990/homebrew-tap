@@ -20,7 +20,7 @@ class Gnanambot < Formula
 
   url "https://github.com/gnanam1990/gnanambot/archive/refs/tags/v0.1.1.tar.gz",
       using: GnanambotPrivateTarball
-  sha256 "05c9505027c4e9033eb7f2428cfbe631cf348096d56857db76c6643d11b4ba70"
+  sha256 "d8ef73c8dcf57ebed2f5bf99dfee7c17e0b71d756ad5ceede8770c2da4fb397e"
   license "MIT"
   depends_on "go" => :build
 
