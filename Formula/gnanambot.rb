@@ -25,7 +25,7 @@ class Gnanambot < Formula
   depends_on "go" => :build
 
   def install
-    system "go", "build", "-o", bin/"gnanambot", "./cmd/gnanambot"
+    system "go", "build", "-ldflags", "-X main.version=v0.1.2", "-o", bin/"gnanambot", "./cmd/gnanambot"
     (bin/"bin").install "bin/cwebp", "bin/sand-scroll"
     system "swiftc", "-O", "bin/ocr.swift", "-o", bin/"bin/ocr"
     system "swiftc", "-O", "bin/voice.swift", "-o", bin/"bin/voice"
