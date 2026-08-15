@@ -1,3 +1,20 @@
+# Private-repo tarball strategy for Gnanambot: Homebrew's core strategies
+# can't fetch from a private GitHub repo, so subclass CurlDownloadStrategy
+# and attach the user's token (HOMEBREW_GITHUB_API_TOKEN) as a Bearer header.
+# Must be defined BEFORE `class Gnanambot` (Ruby evaluates top-down, and the
+# `url ... using:` line references this constant immediately).
+class GnanambotPrivateTarball < CurlDownloadStrategy
+  private
+
+  def _fetch(*)
+    if (token = ENV["HOMEBREW_GITHUB_API_TOKEN"]) && !token.empty?
+      @curl_args << "--header"
+      @curl_args << "Authorization: Bearer #{token}"
+    end
+    super
+  end
+end
+
 class Gnanambot < Formula
   desc "Local macOS agent: Ollama chat + tools (shell, files, computer control) in Go"
   homepage "https://github.com/gnanam1990/gnanambot"
@@ -6,25 +23,6 @@ class Gnanambot < Formula
   sha256 "05c9505027c4e9033eb7f2428cfbe631cf348096d56857db76c6643d11b4ba70"
   license "MIT"
   depends_on "go" => :build
-
-  # Private-repo tarball strategy: Homebrew's core strategies can't fetch
-  # from a private GitHub repo, so subclass CurlDownloadStrategy and add the
-  # user's GITHUB token (HOMEBREW_GITHUB_API_TOKEN) as a Bearer header.
-  class GnanambotPrivateTarball < CurlDownloadStrategy
-    def initialize(url, name, version, **kwargs)
-      super
-    end
-
-    private
-
-    def _fetch(*)
-      if (token = ENV["HOMEBREW_GITHUB_API_TOKEN"]) && !token.empty?
-        @curl_args << "--header"
-        @curl_args << "Authorization: Bearer #{token}"
-      end
-      super
-    end
-  end
 
   def install
     system "go", "build", "-o", bin/"gnanambot", "./cmd/gnanambot"
