@@ -29,7 +29,9 @@ class Gnanambot < Formula
     (bin/"bin").install "bin/cwebp", "bin/sand-scroll"
     system "swiftc", "-O", "bin/ocr.swift", "-o", bin/"bin/ocr"
     system "swiftc", "-O", "bin/voice.swift", "-o", bin/"bin/voice"
-    chmod "+x", bin/"bin/ocr", bin/"bin/voice"
+    chmod "+x", bin/"gnanambot"
+    chmod "+x", bin/"bin/ocr"
+    chmod "+x", bin/"bin/voice"
   end
 
   service do
