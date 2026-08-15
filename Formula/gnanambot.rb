@@ -18,9 +18,9 @@ class Gnanambot < Formula
     end
   end
 
-  url "https://github.com/gnanam1990/gnanambot/archive/refs/tags/v0.1.1.tar.gz",
+  url "https://github.com/gnanam1990/gnanambot/archive/refs/tags/v0.1.2.tar.gz",
       using: GnanambotPrivateTarball
-  sha256 "d8ef73c8dcf57ebed2f5bf99dfee7c17e0b71d756ad5ceede8770c2da4fb397e"
+  sha256 "f98010521f83f74dfd3b9772af838d335dc173b5ccc96a95d459304b19b8955b"
   license "MIT"
   depends_on "go" => :build
 
