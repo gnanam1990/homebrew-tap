@@ -18,20 +18,20 @@ class Gnanambot < Formula
     end
   end
 
-  url "https://github.com/gnanam1990/gnanambot/archive/refs/tags/v0.1.2.tar.gz",
+  url "https://github.com/gnanam1990/gnanambot/archive/refs/tags/v0.1.3.tar.gz",
       using: GnanambotPrivateTarball
-  sha256 "f63d5f56c8d685ae07c20c6a88f7654adc52bbdc66dea2ef0c1f1dc09a89fd46"
+  sha256 "57f77e310f6efd598cc453c74ec9dd15007cd32b7d4cc67d61b5befe19173cef"
   license "MIT"
   depends_on "go" => :build
 
   def install
-    system "go", "build", "-ldflags", "-X main.version=v0.1.2", "-o", bin/"gnanambot", "./cmd/gnanambot"
+    system "go", "build", "-ldflags", "-X main.version=v0.1.3", "-o", bin/"gnanambot", "./cmd/gnanambot"
+    system "go", "build", "-tags", "dev", "-ldflags", "-X main.version=v0.1.3", "-o", bin/"gnanambot-desktop", "./cmd/gnanambot-desktop"
     (bin/"bin").install "bin/cwebp", "bin/sand-scroll"
     system "swiftc", "-O", "bin/ocr.swift", "-o", bin/"bin/ocr"
     system "swiftc", "-O", "bin/voice.swift", "-o", bin/"bin/voice"
-    chmod "+x", bin/"gnanambot"
-    chmod "+x", bin/"bin/ocr"
-    chmod "+x", bin/"bin/voice"
+    chmod "+x", bin/"gnanambot", bin/"gnanambot-desktop"
+    chmod "+x", bin/"bin/ocr", bin/"bin/voice"
   end
 
   service do
