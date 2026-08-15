@@ -3,19 +3,18 @@ class Gnanambot < Formula
   homepage "https://github.com/gnanam1990/gnanambot"
 
   # Private-repo download strategy: Homebrew's core strategies can't fetch
-  # from a private GitHub repo. This nested class extends CurlDownloadStrategy
-  # and attaches the user's token (HOMEBREW_GITHUB_API_TOKEN) as a Bearer
-  # header. Must be defined INSIDE the formula class so the `using:` line
-  # below resolves it (Homebrew namespaces top-level constants).
+  # from a private GitHub repo. This nested class overrides `_curl_args` and
+  # appends the user's token (HOMEBREW_GITHUB_API_TOKEN) as a Bearer header.
+  # Defined INSIDE the formula class so the `using:` line resolves it.
   class GnanambotPrivateTarball < CurlDownloadStrategy
     private
 
-    def _fetch(*)
+    def _curl_args
+      args = super
       if (token = ENV["HOMEBREW_GITHUB_API_TOKEN"]) && !token.empty?
-        @curl_args << "--header"
-        @curl_args << "Authorization: Bearer #{token}"
+        args += ["--header", "Authorization: Bearer #{token}"]
       end
-      super
+      args
     end
   end
 
